@@ -1,0 +1,45 @@
+pixel23 - Jack% gnuplot
+
+gnuplot> set logscale x 2
+gnuplot> plot [][0:2] 'results/varyarch.out' using 1:3 with linespoints
+gnuplot> set terminal png
+Terminal type set to 'png'
+Options are 'nocrop font /usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf 12 size 640,480 '
+gnuplot> set output "results/varyarch.png"
+gnuplot> replot
+gnuplot> plot [][0:2] 'results/varyarch-energy.out' using 1:3 with linespoints
+gnuplot> set output "results/varyarch-energy.png"
+gnuplot> replot
+gnuplot> replot
+gnuplot> set output "results/varyarch.png"
+gnuplot> plot [][0:2] 'results/varyarch.out' using 1:3 with linespoints
+gnuplot> plot [][0:2] 'results/varyarch.out' using 1:3 with linespoints unset key
+
+gnuplot> plot [][0:2] 'results/varyarch.out' using 1:3 with linespoints unset key
+                                                                        ^
+         ';' expected
+
+gnuplot> plot [][0:2] 'results/varyarch.out' using 1:3 with linespoints 
+gnuplot> unset key
+gnuplot> replot
+gnuplot> set nokey
+             ^
+         warning: deprecated syntax, use "unset"
+gnuplot> unset key
+gnuplot> replot
+gnuplot> unset colorbox
+gnuplot> replot
+gnuplot> legend hide
+         ^
+         invalid command
+
+gnuplot> hide legend
+         ^
+         invalid command
+
+gnuplot> set title "RUU Size against Number of Instructions per Cycle"
+gnuplot> set xlabel "RUU Size"
+gnuplot> set ylabel "Instructions per Cycle"
+gnuplot> replot
+gnuplot> set output "results/varyarch.png"
+gnuplot> replot

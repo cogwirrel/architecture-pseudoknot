@@ -1,0 +1,24 @@
+#!/bin/bash
+
+i=0
+
+for ruu in 2 4 8 16 32 64 128 256
+do
+  for lsq in 2 4 8 16 32 64 128 256
+  do
+    ((i++))
+    echo "$i start" 1>&2
+    echo -n "ruu:$ruu lsq:$lsq " > $i"sim.out"
+    ./jack-run-wattch "-ruu:size $ruu -lsq:size $lsq" 2>&1 |
+      grep -E 'sim_IPC|# total power per cycle_cc1' |
+      grep -E -o '[0-9]+.?[0-9]*' >> $i"sim.out" &&
+      echo "$i done" 1>&2 &
+  done
+done
+
+wait
+
+for ((j=1;j<=$i;j++))
+do
+  cat $j"sim.out" | echo `perl -ne 'chomp and print'`
+done

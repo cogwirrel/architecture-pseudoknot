@@ -1,0 +1,150 @@
+/*
+
+  File: "nucleic.c"
+
+  Authors: Marcel Turcotte and Marc Feeley
+
+  Last Modified On: Sat Mar 12 13:05:05 1994
+
+  This program is described in the paper:
+
+    "Using Multilisp for Solving Constraint Satisfaction Problems: an
+    Application to Nucleic Acid 3D Structure Determination" published in
+    the journal "Lisp and Symbolic Computation".
+
+*/
+
+#include <stdio.h>
+#include <math.h>
+
+/*---------------------------------------------------------------------------*/
+
+/* MATH UTILITIES */
+
+typedef double FLOAT; /* define precision of floating point numbers */
+
+#ifndef M_PI
+#define M_PI   3.14159265358979323846
+#endif
+#ifndef M_PI_2
+#define M_PI_2 1.57079632679489661923
+#endif
+
+/*---------------------------------------------------------------------------*/
+
+/* POINTS */
+
+struct struct_pt
+{
+  FLOAT x, y, z;
+};
+
+typedef struct struct_pt *pt;
+
+#define make_pt(a,b,c,p){(p)->x=(a);(p)->y=(b);(p)->z=(c);}
+
+struct struct_tfo
+{
+  FLOAT m[4][3];
+};
+
+typedef struct struct_tfo *tfo;
+
+/* database */
+
+struct struct_A
+{
+  struct struct_pt n6, n7, n9, c8, h2, h61, h62, h8;
+};
+
+struct struct_C
+{
+  struct struct_pt n4, o2, h41, h42, h5, h6;
+};
+
+struct struct_G
+{
+  struct struct_pt n2, n7, n9, c8, o6, h1, h21, h22, h8;
+};
+
+struct struct_U
+{
+  struct struct_pt o2, o4, h3, h5, h6;
+};
+
+struct struct_nuc
+{
+  char type; /* 'A', 'C', 'G', or 'U' */
+  struct struct_tfo
+    dgf_base_tfo, p_o3_275_tfo, p_o3_180_tfo, p_o3_60_tfo;
+  struct struct_pt
+    p, o1p, o2p, o5_, c5_, h5_, h5__, c4_, h4_, o4_, c1_, h1_,
+    c2_, h2__, o2_, h2_, c3_, h3_, o3_, n1, n3, c2, c4, c5, c6;
+  union
+  {
+    struct struct_A A;
+    struct struct_C C;
+    struct struct_G G;
+    struct struct_U U;
+  } _;
+};
+
+typedef struct struct_nuc *nuc;
+
+struct struct_var
+{
+  int i;
+  tfo t;
+  nuc n;
+};
+
+typedef struct struct_var *var;
+
+typedef struct struct_var *var_list;
+
+struct struct_sol_list
+{
+  var_list sol;
+  struct struct_sol_list *next;
+};
+
+typedef struct struct_sol_list *sol_list;
+
+/* COORDINATE TRANSFORMATIONS */
+
+#define make_tfo(a,b,c,d,e,f,g,h,i,x,y,z,t)\
+{\
+(t)->m[0][0]=(a);(t)->m[0][1]=(b);(t)->m[0][2]=(c);\
+(t)->m[1][0]=(d);(t)->m[1][1]=(e);(t)->m[1][2]=(f);\
+(t)->m[2][0]=(g);(t)->m[2][1]=(h);(t)->m[2][2]=(i);\
+(t)->m[3][0]=(x);(t)->m[3][1]=(y);(t)->m[3][2]=(z);\
+}
+
+
+extern var get_var( int i );
+
+extern struct struct_var partial_inst[];
+extern int partial_inst_length;
+
+extern void found_solution();
+
+extern void tfo_apply(tfo t, pt p1, pt p2);
+extern void tfo_combine( tfo a, tfo b, tfo t );
+extern void tfo_inv_ortho( tfo t1, tfo t2 );
+extern void tfo_align( pt p1, pt p2, pt p3, tfo t );
+extern void init_nucleotides();
+extern void try( int i, tfo t, nuc n );
+extern FLOAT pt_dist( pt p1, pt p2 );
+
+extern void anticodon_domains();
+extern void anticodonV2_domains();
+extern void anticodonV3_domains();
+extern int anticodon_constraint( var v );
+
+extern void pseudoknot_domains();
+extern int pseudoknot_constraint( var v );
+
+
+
+extern void exit(int code);
+

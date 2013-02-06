@@ -1,0 +1,8 @@
+2  sim_IPC                      0.4596 # instructions per cycle
+4  sim_IPC                      0.7842 # instructions per cycle
+8  sim_IPC                      1.1808 # instructions per cycle
+16  sim_IPC                      1.5118 # instructions per cycle
+32  sim_IPC                      1.6042 # instructions per cycle
+64  sim_IPC                      1.6054 # instructions per cycle
+128  sim_IPC                      1.6054 # instructions per cycle
+256  sim_IPC                      1.6054 # instructions per cycle

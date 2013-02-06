@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/homes/phjk/simplesim-wattch/sim-outorder $SSFLAGS ./nucleic.ss 1
