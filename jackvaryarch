@@ -8,8 +8,9 @@ do
   do
     ((i++))
     echo "$i start" 1>&2
-    echo -n "ruu:$ruu lsq:$lsq " > $i"sim.out"
-    ./jack-run-wattch "-ruu:size $ruu -lsq:size $lsq" 2>&1 |
+    echo -n "ruu:$ruu lsq:$lsq" > $i"sim.out"
+    architecture="-ruu:size $ruu -lsq:size $lsq -fetch:ifqsize $ifqsize"
+    ./jack-run-wattch $architecture 2>&1 |
       grep -E 'sim_IPC|# total power per cycle_cc1' |
       grep -E -o '[0-9]+.?[0-9]*' >> $i"sim.out" &&
       echo "$i done" 1>&2 &
