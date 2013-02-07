@@ -1,0 +1,42 @@
+#!/bin/bash
+
+i=0
+
+for ruu in 2 4 8 16 32 64 128 256
+do
+  for lsq in 2 4 8 16 32 64 128 256
+  do
+    for ifqsize in 2 4 8 16 32 64
+    do
+      for issuewidth in 2 4 8 16 32 64
+      do
+        for decodewidth in 2 4 8 16 32 64
+        do
+          for commitwidth in 2 4 8 16 32 64
+          do
+            for bpred in nottaken taken bimod 2lev comb
+            do
+              for mem in 1 2 4 8 16 32 64 128 256
+              do
+                for ialu in 1 2 4 8
+                do
+                  for imult in 1 2 4 8
+                  do
+                    for fpalu in 1 2 4 8
+                    do
+                      for fpmult in 1 2 4 8
+                      do
+                        echo "-ruu:size $ruu -lsq:size $lsq -fetch:ifqsize $ifqsize -issue:width $issuewidth -decode:width $decodewidth -commit:width $commitwidth -bpred $bpred -mem:width $mem -res:ialu $ialu -res:imult $imult -res:fpalu $fpalu -res:fpmult $fpmult" > "in/"$i".in"
+                        ((i++))
+                      done
+                    done
+                  done
+                done
+              done
+            done
+          done
+        done
+      done
+    done
+  done
+done

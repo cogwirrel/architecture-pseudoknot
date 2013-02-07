@@ -18,6 +18,5 @@
 
 -res:ialu                   4 # total number of integer ALU's available
 -res:imult                  1 # total number of integer multiplier/dividers available
--res:memport                2 # total number of memory system ports available (to CPU)
 -res:fpalu                  4 # total number of floating point ALU's available
 -res:fpmult                 1 # total number of floating point multiplier/dividers available
